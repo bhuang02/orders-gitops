@@ -49,9 +49,22 @@ spec:
             name: {{ .Release.Name }}-routing
             routes:
               - primary
+
       steps:
         - setWeight: 10
-        - pause: {}
+        - pause:
+            duration: 2m
+        - analysis:
+            templates:
+              - templateName: {{ .Release.Name }}-health
         - setWeight: 50
-        - pause: {}
+        - pause:
+            duration: 1m
         - setWeight: 100
+
+#      steps:
+#        - setWeight: 10
+#        - pause: {}
+#        - setWeight: 50
+#        - pause: {}
+#        - setWeight: 100

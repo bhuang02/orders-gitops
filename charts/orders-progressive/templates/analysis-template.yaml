@@ -1,0 +1,40 @@
+
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  name: {{ .Release.Name }}-health
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  metrics:
+    - name: canary-success-rate
+      interval: 30s
+      count: 3
+      failureLimit: 0
+      successCondition: result[0] >= 0.95
+      provider:
+        prometheus:
+          address: http://monitoring-kube-prometheus-prometheus.monitoring.svc.cluster.local:9090
+          query: |
+            (
+              (
+                sum(increase(istio_requests_total{reporter="source",destination_service_name="{{ .Release.Name }}-canary",destination_service_namespace="{{ .Release.Namespace }}",response_code=~"2.."}[2m]))
+                or vector(0)
+              )
+              /
+              clamp_min(
+                (
+                  sum(increase(istio_requests_total{reporter="source",destination_service_name="{{ .Release.Name }}-canary",destination_service_namespace="{{ .Release.Namespace }}"}[2m]))
+                  or vector(0)
+                ),
+                1
+              )
+            )
+            *
+            (
+              (
+                sum(increase(istio_requests_total{reporter="source",destination_service_name="{{ .Release.Name }}-canary",destination_service_namespace="{{ .Release.Namespace }}"}[2m]))
+                or vector(0)
+              ) >= bool 20
+            )
+
