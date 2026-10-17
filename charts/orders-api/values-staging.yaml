@@ -1,5 +1,5 @@
 # Replace with the full Git SHA of the successfully published Jenkins image.
 image:
-  tag: 5f8bb5ee62fd1c85bcb18f10173354803ba3f442
+  tag: 'c702c02aaafe1f01726ec8853213bb2532489375'
 
 replicaCount: 1
