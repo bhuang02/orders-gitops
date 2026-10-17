@@ -1,0 +1,37 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: orders-progressive
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/bhuang02/orders-gitops.git
+    targetRevision: main
+    path: charts/orders-progressive
+    helm:
+      releaseName: orders-progressive
+      valueFiles:
+        - values-lab.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: orders-progressive
+  ignoreDifferences:
+    - group: networking.istio.io
+      kind: VirtualService
+      name: orders-progressive-routing
+      namespace: orders-progressive
+      jqPathExpressions:
+        - .spec.http[].route[].weight
+    - group: ""
+      kind: Service
+      namespace: orders-progressive
+      jqPathExpressions:
+        - .spec.selector."rollouts-pod-template-hash"
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - RespectIgnoreDifferences=true

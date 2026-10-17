@@ -1,0 +1,8 @@
+# Replace with the exact SHA already published successfully to GHCR.
+image:
+  tag: "c702c02aaafe1f01726ec8853213bb2532489375"
+
+# Change v1 -> v2 later to trigger a real new ReplicaSet without rebuilding.
+releaseLabel: "v1"
+failurePercent: 0
+replicaCount: 2

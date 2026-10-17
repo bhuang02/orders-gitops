@@ -1,0 +1,24 @@
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: {{ .Release.Name }}-routing
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  hosts:
+    - orders-progressive.lab.test
+  gateways:
+    - istio-ingress/lab-gateway
+  http:
+    - name: primary
+      route:
+        - destination:
+            host: {{ .Release.Name }}-stable
+            port:
+              number: 80
+          weight: 100
+        - destination:
+            host: {{ .Release.Name }}-canary
+            port:
+              number: 80
+          weight: 0

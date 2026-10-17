@@ -1,0 +1,14 @@
+replicaCount: 2
+image:
+  repository: ghcr.io/bhuang02/orders-api
+  tag: "REPLACE_WITH_PUBLISHED_SHA"
+  pullPolicy: IfNotPresent
+releaseLabel: "v1"
+failurePercent: 0
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 300m
+    memory: 256Mi

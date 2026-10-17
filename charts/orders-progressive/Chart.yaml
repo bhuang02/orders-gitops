@@ -1,0 +1,6 @@
+apiVersion: v2
+name: orders-progressive
+description: Separate canary lab for orders-api using Argo Rollouts and Istio
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
