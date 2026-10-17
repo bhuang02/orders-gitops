@@ -3,6 +3,8 @@ image:
   tag: "c702c02aaafe1f01726ec8853213bb2532489375"
 
 # Change v1 -> v2 later to trigger a real new ReplicaSet without rebuilding.
-releaseLabel: "v2"
-failurePercent: 0
+#releaseLabel: "v2"
+#failurePercent: 0
+releaseLabel: "v3"
+failurePercent: 80
 replicaCount: 2
