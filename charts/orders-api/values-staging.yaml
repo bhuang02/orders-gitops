@@ -1,0 +1,5 @@
+# Replace with the full Git SHA of the successfully published Jenkins image.
+image:
+  tag: ghcr.io/bhuang02/orders-api:5f8bb5ee62fd1c85bcb18f10173354803ba3f442
+
+replicaCount: 1
