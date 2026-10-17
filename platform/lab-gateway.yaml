@@ -6,7 +6,7 @@ metadata:
 spec:
   # Verify the ingress gateway Pod labels; adjust this selector if different.
   selector:
-    istio: ingressgateway
+    istio: ingress
   servers:
     - port:
         number: 80
